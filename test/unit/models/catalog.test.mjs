@@ -23,13 +23,11 @@ const EXPECTED_LOCAL_METADATA = {
       "unsloth/embeddinggemma-2-GGUF",
       "412430755667d84b1ac64fe1fe2693aa6219f1d9",
     ],
-    modelScope: [
-      "unsloth/embeddinggemma-2-GGUF",
-      "412430755667d84b1ac64fe1fe2693aa6219f1d9",
-    ],
+    modelScope: null,
     artifacts: ["embeddinggemma-2-Q8_0.gguf"],
-    artifactBytes: 325058560,
-    artifactManifestSha256: "NEEDS_VERIFIED_ARTIFACT_SHA256",
+    artifactBytes: 309855520,
+    artifactManifestSha256:
+      "870cd248abd110b11fb03f2837d09e07ebeeae6dc65200f87bbcfc04e6212c46",
   },
   "local/qwen3-embedding-0.6b": {
     huggingFace: [
@@ -222,6 +220,10 @@ test("local embedding models declare pinned source and artifact metadata", () =>
 
     for (const sourceName of ["huggingFace", "modelScope"]) {
       const source = entry.sources[sourceName];
+      if (source === undefined) {
+        assert.equal(expected[sourceName], null);
+        continue;
+      }
       assert.deepEqual(
         [source.repo, source.revision],
         expected[sourceName],
@@ -240,24 +242,20 @@ test("local embedding models declare pinned source and artifact metadata", () =>
       expected.artifactBytes,
       `${entry.reference} artifact bytes`,
     );
-    if (expected.artifactManifestSha256) {
-      assert.equal(
-        createHash("sha256")
-          .update(JSON.stringify(entry.artifacts))
-          .digest("hex"),
-        expected.artifactManifestSha256,
-        `${entry.reference} artifact manifest`,
-      );
-    }
+    assert.equal(
+      createHash("sha256")
+        .update(JSON.stringify(entry.artifacts))
+        .digest("hex"),
+      expected.artifactManifestSha256,
+      `${entry.reference} artifact manifest`,
+    );
     for (const artifact of entry.artifacts) {
       assert.ok(artifact.size > 0, `${entry.reference} ${artifact.path} size`);
-      if (expected.artifactManifestSha256) {
-        assert.match(
-          artifact.sha256,
-          /^[0-9a-f]{64}$/,
-          `${entry.reference} ${artifact.path} sha256`,
-        );
-      }
+      assert.match(
+        artifact.sha256,
+        /^[0-9a-f]{64}$/,
+        `${entry.reference} ${artifact.path} sha256`,
+      );
     }
   }
 });

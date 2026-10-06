@@ -48,17 +48,13 @@ export const EMBEDDING_MODEL_CATALOG = {
         repo: "unsloth/embeddinggemma-2-GGUF",
         revision: "412430755667d84b1ac64fe1fe2693aa6219f1d9",
       },
-      modelScope: {
-        repo: "unsloth/embeddinggemma-2-GGUF",
-        revision: "412430755667d84b1ac64fe1fe2693aa6219f1d9",
-      },
     },
     artifacts: [
       {
         path: "embeddinggemma-2-Q8_0.gguf",
-        size: 325058560,
+        size: 309855520,
         sha256:
-          "0000000000000000000000000000000000000000000000000000000000000000",
+          "6f1bd4ac6c5df7444f9cca7ca36cafe6cfa34cd6f49fefb1e0b4be8143aed8bc",
       },
     ],
     dimension: 768,

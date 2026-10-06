@@ -622,7 +622,7 @@ export class LlamaCppEmbeddingModel extends BaseEmbeddingModel {
   ): readonly ModelArtifactSource[] {
     const huggingFace = this.entry.sources.huggingFace;
     const modelScope = this.entry.sources.modelScope;
-    return [
+    const sources: ModelArtifactSource[] = [
       {
         kind: "huggingface",
         repo: huggingFace.repo,
@@ -630,7 +630,9 @@ export class LlamaCppEmbeddingModel extends BaseEmbeddingModel {
         cacheDirectory: this.modelCacheDir,
         localPaths: { [artifactPath]: this.entry.cacheFile },
       },
-      {
+    ];
+    if (modelScope) {
+      sources.push({
         kind: "modelscope",
         repo: modelScope.repo,
         revision: modelScope.revision,
@@ -641,8 +643,9 @@ export class LlamaCppEmbeddingModel extends BaseEmbeddingModel {
           modelScope.repo.replaceAll("/", "--"),
           modelScope.revision,
         ),
-      },
-    ];
+      });
+    }
+    return sources;
   }
 
   private async resolveParallelism(): Promise<number> {
