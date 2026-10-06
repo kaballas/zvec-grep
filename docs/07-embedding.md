@@ -8,7 +8,7 @@
 The Embedding model determines the vector representation used by indexed
 search. It affects language coverage, memory use, index size, input length, and
 indexing speed. A new index selects an explicit model, an environment default,
-or a configured default, and otherwise uses the built-in local default:
+or a configured default, and otherwise uses `local/embeddinggemma-2`:
 
 ```bash
 zg --index --embedding local/potion-code-16m-v2
@@ -33,6 +33,7 @@ default. Select and authorize a remote model explicitly with `zg --index`.
 
 | Need | Start with | Why |
 | --- | --- | --- |
+| Default local code and multilingual search | `local/embeddinggemma-2` | Q8 GGUF, 768 dimensions, and 8,192-token context |
 | A fast first index for a code repository | `local/potion-code-16m-v2` | Small static Model2Vec model with a 1,024-token input limit |
 | Fast English document retrieval | `local/potion-retrieval-32m` | Retrieval-tuned static model with 512-dimensional vectors |
 | Fast multilingual document retrieval | `local/potion-multilingual-128m` | Static model trained for 101 languages with compact 256-dimensional vectors |
@@ -65,6 +66,7 @@ file.
 | `local/gte-modernbert-base` | ONNX Q4 | 8,192 | 768 |
 | `local/nomic-embed-text-v1.5` | ONNX Q4 | 8,192 | 768 |
 | `local/embeddinggemma-300m` | GGUF Q8_0 | 2,048 | 768 |
+| `local/embeddinggemma-2` | GGUF Q8_0 | 8,192 | 768 |
 | `local/qwen3-embedding-0.6b` | GGUF Q8_0 | 8,192 | 1,024 |
 | `qwen/text-embedding-v4` | Remote text | 8,192 | 1,024 |
 | `qwen/qwen3.7-text-embedding` | Remote text | 128,000 | 1,024 |

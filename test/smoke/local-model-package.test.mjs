@@ -7,7 +7,7 @@ import { promisify } from "node:util";
 import test from "node:test";
 
 const execFileAsync = promisify(execFile);
-const DEFAULT_MODEL = "local/potion-code-16m-v2";
+const DEFAULT_MODEL = "local/embeddinggemma-2";
 const TRANSFORMERS_SMOKE_MODEL = "local/all-minilm-l6-v2";
 
 function runNpm(args, options) {

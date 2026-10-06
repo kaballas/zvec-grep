@@ -129,7 +129,7 @@ their stored model and file-selection settings:
 
 ```bash
 # First build
-zg --index --embedding local/potion-code-16m-v2
+zg --index --embedding local/embeddinggemma-2
 
 # Incremental update with the stored schema
 zg --index

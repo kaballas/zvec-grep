@@ -77,7 +77,7 @@ import {
   withRemoteEmbeddingOperationPermit,
 } from "./auth.js";
 
-const DEFAULT_IMPLICIT_EMBEDDING = "local/potion-code-16m-v2";
+const DEFAULT_IMPLICIT_EMBEDDING = "local/embeddinggemma-2";
 
 export async function runParsedCommand(parsed: ParsedArgs): Promise<void> {
   switch (parsed.command) {

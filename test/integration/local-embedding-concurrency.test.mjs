@@ -49,7 +49,7 @@ test("Direct automatic indexing applies the index environment to Potion batches"
     },
   );
   t.mock.method(servicePrototype, "index", async function (options) {
-    assert.equal(this.options.embedding, "local/potion-code-16m-v2");
+    assert.equal(this.options.embedding, "local/embeddinggemma-2");
     return await index.call(this, {
       ...options,
       onProgress(event) {

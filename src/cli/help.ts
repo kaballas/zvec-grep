@@ -104,11 +104,11 @@ Examples:
   zg "where authentication is validated"
   zg --fts "AuthService"
   zg --rg -F "AuthService" src
-  zg --index --embedding local/potion-code-16m-v2
+  zg --index --embedding local/embeddinggemma-2
   zg --status
   zg --auth status
   zg --server on
-  zg --config model set local/potion-code-16m-v2 --device metal
+  zg --config model set local/embeddinggemma-2 --device metal
   zg --install
 
 Environment:
@@ -222,7 +222,7 @@ File selection:
   --reset-paths                     Clear inherited file-selection settings
 
 New indexes use --embedding, ZVEC_GREP_EMBEDDING, a configured default, or the
-built-in local default in that order. Existing indexes reuse their schema.
+built-in local/embeddinggemma-2 default in that order. Existing indexes reuse their schema.
 
 Environment:
 ${formatEnvironmentVariables([

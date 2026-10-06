@@ -15,6 +15,7 @@ test("embedding factory resolves catalog entries and rejects unknown models", ()
   const options = { apiKey: "secret", endpoint: "https://example.test" };
   const expectedModelClasses = new Map([
     ["local/embeddinggemma-300m", LlamaCppEmbeddingModel],
+    ["local/embeddinggemma-2", LlamaCppEmbeddingModel],
     ["local/qwen3-embedding-0.6b", LlamaCppEmbeddingModel],
     ["qwen/text-embedding-v4", QwenTextEmbeddingV4Model],
     ["qwen/qwen3.7-text-embedding", Qwen37TextEmbeddingModel],

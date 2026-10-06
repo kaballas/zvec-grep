@@ -84,7 +84,7 @@ import {
   type RemoteEmbeddingOperationPermit,
 } from "../authorization/index.js";
 
-const DEFAULT_LOCAL_EMBEDDING = "local/potion-code-16m-v2";
+const DEFAULT_LOCAL_EMBEDDING = "local/embeddinggemma-2";
 
 export type DaemonBackendOptions = {
   version: string;

@@ -272,7 +272,7 @@ test("direct and server indexes summarize model download failures unless debuggi
     await removeTemporaryDirectory(temporaryDirectory);
   });
 
-  const conciseMessage = 'Failed to download model "local/potion-code-16m-v2".';
+  const conciseMessage = 'Failed to download model "local/embeddinggemma-2".';
   const conciseError = `Error: ${conciseMessage}`;
   const assertConciseOutput = (output) => {
     assert.ok(output.includes(conciseMessage), output);
@@ -309,7 +309,7 @@ test("direct and server indexes summarize model download failures unless debuggi
   const assertImplicitDownloadFailure = (debug) => (error) => {
     assert.match(
       error.stderr,
-      /No index found; creating one with local\/potion-code-16m-v2\./,
+      /No index found; creating one with local\/embeddinggemma-2\./,
     );
     return assertDownloadFailure(debug)(error);
   };
@@ -938,6 +938,7 @@ test("CLI exposes stable help, version, and failure behavior", async (t) => {
   assert.match(helpTopics.stdout, /file-types\s+Supported file types/);
   const modelsHelp = await runCli(["--help", "models"]);
   assert.match(modelsHelp.stdout, /local\/potion-code-16m-v2/);
+  assert.match(modelsHelp.stdout, /local\/embeddinggemma-2/);
   assert.match(modelsHelp.stdout, /local\/potion-retrieval-32m/);
   assert.match(modelsHelp.stdout, /local\/potion-multilingual-128m/);
   assert.doesNotMatch(modelsHelp.stdout, /local\/potion-base-8m/);

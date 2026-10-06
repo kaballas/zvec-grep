@@ -774,6 +774,12 @@ function formatTextForEmbedding(
       : text;
   }
 
+  if (entry.format === "embeddinggemma2") {
+    return purpose === "query"
+      ? `task: search result | query: ${text}`
+      : `title: none | text: ${text}`;
+  }
+
   return purpose === "query"
     ? `task: search result | query: ${text}`
     : `title: none | text: ${text}`;

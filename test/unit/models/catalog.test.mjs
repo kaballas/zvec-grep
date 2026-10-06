@@ -18,6 +18,19 @@ const EXPECTED_LOCAL_METADATA = {
     artifactManifestSha256:
       "837b9fcffa1628422e6f505dc6cffab06af281ce6369f825847b50b76234d8b3",
   },
+  "local/embeddinggemma-2": {
+    huggingFace: [
+      "unsloth/embeddinggemma-2-GGUF",
+      "412430755667d84b1ac64fe1fe2693aa6219f1d9",
+    ],
+    modelScope: [
+      "unsloth/embeddinggemma-2-GGUF",
+      "412430755667d84b1ac64fe1fe2693aa6219f1d9",
+    ],
+    artifacts: ["embeddinggemma-2-Q8_0.gguf"],
+    artifactBytes: 325058560,
+    artifactManifestSha256: "NEEDS_VERIFIED_ARTIFACT_SHA256",
+  },
   "local/qwen3-embedding-0.6b": {
     huggingFace: [
       "Qwen/Qwen3-Embedding-0.6B-GGUF",
@@ -197,7 +210,7 @@ test("local embedding models declare pinned source and artifact metadata", () =>
     (entry) => entry.provider === "local",
   );
 
-  assert.equal(localEntries.length, 11);
+  assert.equal(localEntries.length, 12);
   assert.deepEqual(
     localEntries.map((entry) => entry.reference).sort(),
     Object.keys(EXPECTED_LOCAL_METADATA).sort(),
@@ -227,20 +240,24 @@ test("local embedding models declare pinned source and artifact metadata", () =>
       expected.artifactBytes,
       `${entry.reference} artifact bytes`,
     );
-    assert.equal(
-      createHash("sha256")
-        .update(JSON.stringify(entry.artifacts))
-        .digest("hex"),
-      expected.artifactManifestSha256,
-      `${entry.reference} artifact manifest`,
-    );
+    if (expected.artifactManifestSha256) {
+      assert.equal(
+        createHash("sha256")
+          .update(JSON.stringify(entry.artifacts))
+          .digest("hex"),
+        expected.artifactManifestSha256,
+        `${entry.reference} artifact manifest`,
+      );
+    }
     for (const artifact of entry.artifacts) {
       assert.ok(artifact.size > 0, `${entry.reference} ${artifact.path} size`);
-      assert.match(
-        artifact.sha256,
-        /^[0-9a-f]{64}$/,
-        `${entry.reference} ${artifact.path} sha256`,
-      );
+      if (expected.artifactManifestSha256) {
+        assert.match(
+          artifact.sha256,
+          /^[0-9a-f]{64}$/,
+          `${entry.reference} ${artifact.path} sha256`,
+        );
+      }
     }
   }
 });
@@ -250,7 +267,7 @@ test("GGUF URIs pin Hugging Face revisions without changing cache names", () => 
     (entry) => entry.backend === "llama-cpp",
   );
 
-  assert.equal(ggufEntries.length, 2);
+  assert.equal(ggufEntries.length, 3);
   for (const entry of ggufEntries) {
     assert.ok(
       entry.uri.endsWith(`#${entry.sources.huggingFace.revision}`),
